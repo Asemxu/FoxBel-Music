@@ -2,7 +2,7 @@ import Api from './api/api.js';
 import { getElement , templateTrack , getElements , removeAdd} from './helpers/helpers.js';
 import { listaContainer , btnReproducir, reproductor , detalleSongsButtons
         , first , detalleCancion , detalleArtistaAlbum , imgPlay, imgTrackReproductor
-        , loader , audioMp3 , play , muted} from './helpers/constants.js';
+        , loader , audioMp3 , play , muted , volume} from './helpers/constants.js';
 
 
 let apiTrack = new Api();
@@ -19,6 +19,8 @@ let audioMp3Dom = getElement(audioMp3);
 let playDom = getElement(play);
 let mutedDom = getElement(muted);
 let isMuted = false;
+let volumeDom = getElement(volume);
+
 window.onload  = async () =>{
     tracks = await apiTrack.getInitialTracks();
     setTracks(tracks);
@@ -96,3 +98,15 @@ mutedDom.addEventListener('click', () =>{
         isMuted = false;
     }
 })
+
+
+volumeDom.addEventListener('input', () =>{
+    let valueVolume = volumeDom.value;
+    audioMp3Dom.volume = valueVolume; 
+})
+
+setInterval(() => {
+    if(audioMp3Dom.ended){
+        removeAdd(playDom,'fa-pause-circle','fa-play-circle');
+    }
+}, 300);
