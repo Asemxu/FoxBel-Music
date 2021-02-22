@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fox Bel Music </title>
+    <link rel="shortcut icon" href="images/foxbel-music-icon.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style/all.css">
+    <link rel="stylesheet" href="style/styles.css" type="text/css">
+</head>
+<body>
+    <div class="body-container">
+        <nav>
+            <div class="navbar-left">
+                <div class="image-app">
+                    <img  src="images/foxbel-music.png" alt="image-app">
+                </div>
+                <div class="mi-libreria">
+                    <h3>Mi Librería</h3>
+                    <ul class="mi-libreria-list">
+                        <li class="isActive">Recientes</li>
+                        <li>Artistas</li>
+                        <li>Álbums</li>
+                        <li>Canciones</li>
+                        <li>Estaciones</li>
+                    </ul>
+                </div>
+                <div class="mi-playlist">
+                    <h3>PlayList</h3>
+                    <ul class="mi-libreria-list">
+                        <li>Metal</li>
+                        <li>Para Bailar</li>
+                        <li>Rocks 90S</li>
+                        <li>Baladas</li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <main>
+            <header class="header-main">
+                <div class="buscar-container">
+                    <div class="buscar-input-container">
+                        <input type="text" autocomplete="off" id="trackSearch" placeholder="Buscar">
+                        <i class="fas fa-search icon-search"></i>
+                    </div>
+                </div>
+                <div class="user-container">
+                    <i class="fas fa-user icon-user"></i>
+                    <h5>Renzo J.</h5>
+                </div>
+            </header>
+            <section class="card-recent">
+                <div class="img-play-container">
+                    <img src="https://e-cdns-images.dzcdn.net/images/artist/22c83631d238c4e21800a75a79c54c61/250x250-000000-80-0-0.jpg" alt="image adele">
+                    <img src="images/play.svg" class="img-play" track="82715364" alt="play imagen"/>
+                </div>
+                <div class="detalle-track">
+                    <div class="background-opacity"></div>
+                    <div class="detalle-container">
+                        <div class="detalle-container-header">
+                            <h2>Adele 21</h2>
+                            <h4>Lo mejor de Adele <h6> &nbsp; &nbsp; 321,123 seguidores</h6></h4>
+                        </div>
+                        <div class="detalle-container-body">
+                            <p>
+                                Adele Laurie Blue Adkins (Tottenham, Londres, Inglaterra, 5 de mayo de 1988), conocida simplemente
+                                como Adele, es una cantante, compositora y multinstrumentista británica.8
+                            </p>
+                        </div>
+                    </div>
+                    <div class="detalle-buttons-container">
+                        <div class="detalle-buttons">
+                            <button id="btn-reproducir" track="82715364" >Reproducir</button>
+                            <button id="btn-seguir">Seguir</button>
+                            <i class="fas fa-angle-double-right more"></i>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="busqueda-container">
+                <h2>Búsqueda</h2>
+                <div class="busqueda-container-list">
+                   
+                </div>
+                <div class="loader-container">
+                    <div class="loader"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <section class="reproductor">
+        <div class="img-cancion">
+            <img id="imgTrackReproductor" src="https://e-cdns-images.dzcdn.net/images/artist/22c83631d238c4e21800a75a79c54c61/250x250-000000-80-0-0.jpg" alt="imagen reproductor cancion"/>
+        </div>
+        <div class="detalle-reproductor-container">
+           <div class="detalle-song-container">
+               <div class="detalle-song">
+                    <h5 id="detalleCancion"></h5>
+                    <h6 id="detalleArtistaAlbum"></h6>
+               </div>
+           </div>
+           <div class="detalle-song-container">
+                <div class="detalle-song-buttons">
+                    <i class="fas fa-step-backward"></i>
+                    <i class="fas fa-play-circle play" track></i>
+                    <i class="fas fa-step-forward"></i>
+                </div>
+            </div>
+            <div class="detalle-song-container">
+               <div class="detalle-volumen-buttons">
+                    <input type="range" min="0" max="10" step="1">
+                    <i class="fas fa-volume-off"></i>   
+               </div>
+           </div>
+        </div>
+        <audio class="audioMp3"></audio>
+        
+    </section>
+    <script type="module" src="js/app.js" ></script>
+</body>
+</html>
+
+<!-- https://e-cdns-images.dzcdn.net/images/artist/22c83631d238c4e21800a75a79c54c61/250x250-000000-80-0-0.jpg -->
