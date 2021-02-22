@@ -17,6 +17,11 @@ const getObject = (song) => {
     }
 }
 
+const removeAdd  = (element ,removeClass , addClass) =>{
+    element.classList.remove(removeClass);
+    element.classList.add(addClass);
+}
+
 const templateTrack = (track) =>{
     return ` <div class="busqueda-element-container">
                 <div class="busqueda-element-header">
@@ -30,6 +35,6 @@ const templateTrack = (track) =>{
             </div>`
 }
 
-export { getElement , templateTrack , getObject , getElements}
+export { getElement , templateTrack , getObject , getElements , removeAdd}
 
 

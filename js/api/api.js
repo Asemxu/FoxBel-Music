@@ -2,6 +2,7 @@ import { urlApi , optionsApi} from '../helpers/env.js';
 import { getTrackList , getTrack } from '../helpers/query.js';
 import { first , initialQuery } from '../helpers/constants.js';
 import { getObject } from '../helpers/helpers.js';
+
 class Api{
     constructor(){
         this.getInitialTracks =  async () =>{
