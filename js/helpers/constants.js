@@ -11,8 +11,10 @@ const imgTrackReproductor   = '#imgTrackReproductor';
 const loader = ".loader-container";
 const audioMp3 = ".audioMp3";
 const play = ".play";
+const muted = ".muted";
+const volume ="#volume";
 
 
 export { listaContainer , first , btnReproducir , initialQuery , reproductor , detalleSongsButtons
         , detalleCancion , detalleArtistaAlbum , imgPlay , imgTrackReproductor , loader
-        , audioMp3 , play}
+        , audioMp3 , play , muted , volume}

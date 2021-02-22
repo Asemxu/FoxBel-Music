@@ -1,8 +1,8 @@
 import Api from './api/api.js';
-import { getElement , templateTrack , getElements } from './helpers/helpers.js';
+import { getElement , templateTrack , getElements , removeAdd} from './helpers/helpers.js';
 import { listaContainer , btnReproducir, reproductor , detalleSongsButtons
         , first , detalleCancion , detalleArtistaAlbum , imgPlay, imgTrackReproductor
-        , loader , audioMp3 , play } from './helpers/constants.js';
+        , loader , audioMp3 , play , muted , volume} from './helpers/constants.js';
 
 
 let apiTrack = new Api();
@@ -17,6 +17,9 @@ let detalleArtistaAlbumDom = getElement(detalleArtistaAlbum);
 let imgTrackReproductorDom = getElement(imgTrackReproductor);
 let audioMp3Dom = getElement(audioMp3);
 let playDom = getElement(play);
+let mutedDom = getElement(muted);
+let isMuted = false;
+let volumeDom = getElement(volume);
 
 window.onload  = async () =>{
     tracks = await apiTrack.getInitialTracks();
@@ -53,8 +56,7 @@ btnReproducirDom.addEventListener('click', async () =>{
 const setTrackReproductor = (track) =>{
     audioMp3Dom.setAttribute('src',track.preview);
     audioMp3Dom.play();
-    playDom.classList.remove('fa-play-circle');
-    playDom.classList.add('fa-pause-circle');
+    removeAdd(playDom,'fa-play-circle','fa-pause-circle');
     imgTrackReproductorDom.setAttribute('src',track.album.cover_medium);
     detalleCancionDom.innerText = track.title;
     detalleArtistaAlbumDom.innerHTML = `${track.artist.name} - ${track.album.title}`
@@ -64,12 +66,10 @@ const setTrackReproductor = (track) =>{
 playDom.addEventListener('click' , () => {
     if(!audioMp3Dom.paused && !audioMp3Dom.ended){
         audioMp3Dom.pause();
-        playDom.classList.remove('fa-pause-circle');
-        playDom.classList.add('fa-play-circle');
+        removeAdd(playDom,'fa-pause-circle','fa-play-circle');
     }else{
         audioMp3Dom.play();
-        playDom.classList.remove('fa-play-circle');
-        playDom.classList.add('fa-pause-circle');
+        removeAdd(playDom,'fa-play-circle','fa-pause-circle');
     }
 })
 
@@ -87,3 +87,26 @@ const showReproductor =  async (idTrack)  =>{
 
 }
 
+mutedDom.addEventListener('click', () =>{
+    if(!isMuted){
+        audioMp3Dom.muted = true;
+        removeAdd(mutedDom,'fa-volume-off','fa-volume-mute');
+        isMuted = true;
+    }else{
+        audioMp3Dom.muted = false 
+        removeAdd(mutedDom,'fa-volume-muted','fa-volume-off');
+        isMuted = false;
+    }
+})
+
+
+volumeDom.addEventListener('input', () =>{
+    let valueVolume = volumeDom.value;
+    audioMp3Dom.volume = valueVolume; 
+})
+
+setInterval(() => {
+    if(audioMp3Dom.ended){
+        removeAdd(playDom,'fa-pause-circle','fa-play-circle');
+    }
+}, 300);
