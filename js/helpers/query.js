@@ -10,4 +10,8 @@ const getTrack = (idTrack) =>{
     return `track/${idTrack}`
 }
 
-export { getArtist , getTrackList , getTrack}
+const getSearch = (search) =>{
+    return `search?q=${search}`
+}
+
+export { getArtist , getTrackList , getTrack , getSearch}
