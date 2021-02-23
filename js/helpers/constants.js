@@ -1,7 +1,7 @@
 const listaContainer = '.busqueda-container-list'
 const btnReproducir = '#btn-reproducir';
 const first = 0;
-const initialQuery = "initialQuery";
+const queryData = "queryData";
 const reproductor = ".reproductor";
 const detalleSongsButtons = ".detalle-song-buttons";
 const detalleCancion = "#detalleCancion";
@@ -13,8 +13,11 @@ const audioMp3 = ".audioMp3";
 const play = ".play";
 const muted = ".muted";
 const volume ="#volume";
+const trackSearch = "#trackSearch";
+const querySearch = "querySearch"
+const coincidenciasText = "#coincidenciasText";
 
 
-export { listaContainer , first , btnReproducir , initialQuery , reproductor , detalleSongsButtons
+export { listaContainer , first , btnReproducir , queryData , reproductor , detalleSongsButtons
         , detalleCancion , detalleArtistaAlbum , imgPlay , imgTrackReproductor , loader
-        , audioMp3 , play , muted , volume}
+        , audioMp3 , play , muted , volume , trackSearch , querySearch , coincidenciasText}

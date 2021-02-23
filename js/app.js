@@ -2,13 +2,14 @@ import Api from './api/api.js';
 import { getElement , templateTrack , getElements , removeAdd} from './helpers/helpers.js';
 import { listaContainer , btnReproducir, reproductor , detalleSongsButtons
         , first , detalleCancion , detalleArtistaAlbum , imgPlay, imgTrackReproductor
-        , loader , audioMp3 , play , muted , volume} from './helpers/constants.js';
+        , loader , audioMp3 , play , muted , volume , trackSearch , coincidenciasText} from './helpers/constants.js';
 
 
 let apiTrack = new Api();
-let tracks = undefined;
+let initialTracks = undefined;
 let loaderDom = getElement(loader)
 let lista = getElement(listaContainer);
+let searchData = undefined;
 let btnReproducirDom = getElement(btnReproducir);
 let reproductorDom = getElement(reproductor);
 let detalleSongsButtonsDom = getElements(detalleSongsButtons); 
@@ -20,10 +21,15 @@ let playDom = getElement(play);
 let mutedDom = getElement(muted);
 let isMuted = false;
 let volumeDom = getElement(volume);
+let trackSearchDom = getElement(trackSearch);
+let coincidenciasTextDom = getElement(coincidenciasText);
 
 window.onload  = async () =>{
-    tracks = await apiTrack.getInitialTracks();
-    setTracks(tracks);
+    await searchTracks();
+    setImgPlayTracks();
+}
+
+const setImgPlayTracks = () =>{
     let imgPlayDom = getElements(imgPlay);
     imgPlayDom.forEach(imgPlay => {
         imgPlay.addEventListener('click' , async () => {
@@ -31,6 +37,25 @@ window.onload  = async () =>{
         } )
     });
 }
+
+const searchTracks = async () =>{
+    initialTracks = await apiTrack.getInitialTracks();
+    setTracks(initialTracks);
+}
+
+trackSearchDom.addEventListener('keyup',  async () =>{
+    lista.innerHTML = "";
+    let searchValue = trackSearchDom.value;
+    if(searchValue !== ''){
+       searchData =  await apiTrack.getSearchData(searchValue);
+       coincidenciasTextDom.innerText = `N° de Canciones : ${searchData.total}`;
+       setTracks(searchData.data);
+       setImgPlayTracks();
+    }else{
+        coincidenciasTextDom.innerText = "Búsqueda";
+       setTracks(initialTracks);
+    }
+})
 
 const setReproductor = (element) =>{
     let idTrack = element.getAttribute('track');
@@ -42,6 +67,7 @@ const setTracks = (tracks) =>{
     tracks.forEach(track => {
         lista.innerHTML+= setTrack(track)
     });
+    trackSearchDom.removeAttribute('disabled');
 }
 
 const setTrack = (track) =>{
