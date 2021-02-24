@@ -3,7 +3,8 @@ import { getElement , templateTrack , getElements , removeAdd} from './helpers/h
 import { listaContainer , btnReproducir, reproductor , detalleSongsButtons
         , first , detalleCancion , detalleArtistaAlbum , imgPlay, imgTrackReproductor
         , loader , audioMp3 , play , muted , volume , trackSearch , coincidenciasText
-        , next , previous } from './helpers/constants.js';
+        , next , previous , headerMain , navContainer , loaderContainer
+        , calc} from './helpers/constants.js';
 
 //Inicializamos la Api
 let apiTrack = new Api();
@@ -31,11 +32,17 @@ let mutedDom = getElement(muted);
 let volumeDom = getElement(volume);
 let trackSearchDom = getElement(trackSearch);
 let coincidenciasTextDom = getElement(coincidenciasText);
+let headerMainDom = getElement(headerMain);
+let loaderContainerDom = getElement(loaderContainer);
+let navContainerDom = getElement(navContainer);
 let previousDoom = getElement(previous);
 let nextDom = getElement(next);
 
 window.onload  = async () =>{
     await searchTracks();
+    navContainerDom.style.height = calc;
+    lista.style.height="1300px";
+    loaderContainerDom.style.height = calc;
     setImgPlayTracks();
 }
 
@@ -54,6 +61,19 @@ const searchTracks = async () =>{
     setTracks(initialTracks);
 }
 
+window.addEventListener('scroll',() =>{
+    let scroll = document.documentElement.scrollTop;
+    console.log(scroll);
+    if(scroll > 70){
+        headerMainDom.classList.add('scroll-fixed');
+    }else{
+        headerMainDom.classList.remove('scroll-fixed');
+    }
+
+})
+
+window.onscroll = () =>{
+}
 // const setPosition = () =>{
 //     for(let i = 0; i < initialTracks.length ; i++){
 //         initialTracks[i] = {...initialTracks[i],'position':i};
@@ -63,13 +83,16 @@ const searchTracks = async () =>{
 
 trackSearchDom.addEventListener('keyup',  async () =>{
     lista.innerHTML = "";
+    loaderContainerDom.style.display="flex";
     let searchValue = trackSearchDom.value;
     if(searchValue !== ''){
        searchData =  await apiTrack.getSearchData(searchValue);
+    //    console.log(searchData);
        coincidenciasTextDom.innerText = `N° de coincidencias encontradas: ${searchData.total}`;
        searchData = searchData.data;
         // console.log(searchData);
         setTracks(searchData);
+        loaderContainerDom.style.display="none";
         setImgPlayTracks();
     }else{
         coincidenciasTextDom.innerText = "Búsqueda";
@@ -80,7 +103,7 @@ trackSearchDom.addEventListener('keyup',  async () =>{
 
 const setReproductor = (element) =>{
     let idTrack = element.getAttribute('track');
-    showReproductor(idTrack,initialTracks);
+    showReproductor(idTrack,);
 }
 
 const setTracks = (tracks) =>{
@@ -101,12 +124,13 @@ btnReproducirDom.addEventListener('click', async () =>{
 
 
 const setTrackReproductor = () =>{
+    // console.log(trackPlay);
     audioMp3Dom.setAttribute('src',trackPlay.song);
     audioMp3Dom.play();
     removeAdd(playDom,'fa-play-circle','fa-pause-circle');
     imgTrackReproductorDom.setAttribute('src',trackPlay.imagen);
-    detalleCancionDom.innerText = trackPlay.title;
-    detalleArtistaAlbumDom.innerHTML = `${trackPlay.artista} - ${trackPlay.albm}`
+    detalleCancionDom.innerText = trackPlay.name;
+    detalleArtistaAlbumDom.innerHTML = `${trackPlay.artista} - ${trackPlay.album}`
     reproductorDom.style.opacity = "1"
 }
 
@@ -120,7 +144,7 @@ playDom.addEventListener('click' , () => {
     }
 })
 
-const showReproductor =  async (idTrack)  =>{
+const showReproductor =  async (idTrack,type)  =>{
     reproductorDom.style.opacity ="0.75";
     reproductorDom.classList.add('click');
     let childs = Array.from(detalleSongsButtonsDom[first].children);
@@ -161,3 +185,5 @@ setInterval(() => {
         removeAdd(playDom,'fa-pause-circle','fa-play-circle');
     }
 }, 300);
+
+

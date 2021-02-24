@@ -87,6 +87,7 @@ main{
     width:100%;
     display:flex;
     align-items: center;
+    transition:all 750ms;
 }
 
 .buscar-container{
@@ -131,6 +132,17 @@ main{
     margin-right: 1.5rem;
 }
 
+
+.scroll-fixed{
+    position:fixed;
+    z-index:10000;
+    width: calc(100% - 400px);
+    border-radius: 25px;
+    border:2px solid #bbb9;
+    padding:1rem;
+    background: white;
+
+}
 /* Tarjeta de Presentación */
 .card-recent{
     border-radius: 15px;
@@ -160,6 +172,9 @@ main{
 
 .img-play{
     position:absolute;
+    width:50px!important;
+    cursor:pointer;
+    height:50px!important;
     transition:all 500ms;
 }
 
@@ -348,14 +363,16 @@ main{
     display:flex;
     justify-content: center;
     width:100%;
+    height: 30vh;
+    align-items: center;
 }
 
 .loader{
     border:16px solid #f3f3f3;
     border-top:16px solid rgb(255, 113, 97);
     border-radius:50%;
-    width:120px;
-    height: 120px;
+    width:250px;
+    height: 250px;
     animation:spin 2s linear infinite;
 }
 

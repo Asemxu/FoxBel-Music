@@ -7,7 +7,7 @@ class Api{
     constructor(){
         this.getInitialTracks =  async () =>{
             let initialTracks = [];
-            let  cantidadTracksShow = 20;
+            let  cantidadTracksShow = 28;
             for(let i = 1; i <= cantidadTracksShow ; i++){
                 let song = await this.#executeQuery(getTrackList(i) ,queryData);
                 song !== undefined ? initialTracks.push(getObject(song)) : "";

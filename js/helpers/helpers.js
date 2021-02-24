@@ -26,7 +26,7 @@ const templateTrack = (track) =>{
     return ` <div class="busqueda-element-container">
                 <div class="busqueda-element-header">
                     <img src="${track.imagen}" alt="img artista">
-                    <img class="img-play header" track="${track.id}" src="images/play.svg"  alt="play iamgen"/>
+                    <img class="img-play img-tracks"  header" track="${track.id}" src="images/play.svg"  alt="${track.name}"/>
                 </div>
                 <div class="busqueda-element-body">
                     <h5>${track.name}</h5>

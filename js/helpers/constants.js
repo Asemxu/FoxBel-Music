@@ -6,7 +6,7 @@ const reproductor = ".reproductor";
 const detalleSongsButtons = ".detalle-song-buttons";
 const detalleCancion = "#detalleCancion";
 const detalleArtistaAlbum = "#detalleArtistaAlbum";
-const imgPlay = ".img-play";
+const imgPlay = ".img-tracks";
 const imgTrackReproductor   = '#imgTrackReproductor';
 const loader = ".loader-container";
 const audioMp3 = ".audioMp3";
@@ -18,8 +18,13 @@ const querySearch = "querySearch"
 const coincidenciasText = "#coincidenciasText";
 const previous = ".previous";
 const next = ".next";
+const headerMain = '.header-main';
+const navContainer = ".nav-container"
+const loaderContainer = ".loader-container";
+const calc = "calc(100vh + 1300px)"
+
 
 export { listaContainer , first , btnReproducir , queryData , reproductor , detalleSongsButtons
         , detalleCancion , detalleArtistaAlbum , imgPlay , imgTrackReproductor , loader
         , audioMp3 , play , muted , volume , trackSearch , querySearch , coincidenciasText
-        , next , previous }
+        , next , previous , headerMain , navContainer , loaderContainer , calc}
