@@ -2,14 +2,23 @@ import Api from './api/api.js';
 import { getElement , templateTrack , getElements , removeAdd} from './helpers/helpers.js';
 import { listaContainer , btnReproducir, reproductor , detalleSongsButtons
         , first , detalleCancion , detalleArtistaAlbum , imgPlay, imgTrackReproductor
-        , loader , audioMp3 , play , muted , volume , trackSearch , coincidenciasText} from './helpers/constants.js';
+        , loader , audioMp3 , play , muted , volume , trackSearch , coincidenciasText
+        , next , previous } from './helpers/constants.js';
 
-
+//Inicializamos la Api
 let apiTrack = new Api();
+
+
+// establecemos los valores en undefined
 let initialTracks = undefined;
+let searchData = undefined;
+let trackPlay = undefined;
+let isMuted = false;
+
+
+//obtenemos los elementos del dom
 let loaderDom = getElement(loader)
 let lista = getElement(listaContainer);
-let searchData = undefined;
 let btnReproducirDom = getElement(btnReproducir);
 let reproductorDom = getElement(reproductor);
 let detalleSongsButtonsDom = getElements(detalleSongsButtons); 
@@ -19,10 +28,11 @@ let imgTrackReproductorDom = getElement(imgTrackReproductor);
 let audioMp3Dom = getElement(audioMp3);
 let playDom = getElement(play);
 let mutedDom = getElement(muted);
-let isMuted = false;
 let volumeDom = getElement(volume);
 let trackSearchDom = getElement(trackSearch);
 let coincidenciasTextDom = getElement(coincidenciasText);
+let previousDoom = getElement(previous);
+let nextDom = getElement(next);
 
 window.onload  = async () =>{
     await searchTracks();
@@ -40,26 +50,37 @@ const setImgPlayTracks = () =>{
 
 const searchTracks = async () =>{
     initialTracks = await apiTrack.getInitialTracks();
+    // setPosition();
     setTracks(initialTracks);
 }
+
+// const setPosition = () =>{
+//     for(let i = 0; i < initialTracks.length ; i++){
+//         initialTracks[i] = {...initialTracks[i],'position':i};
+//     }
+//     console.log(initialTracks);
+// }
 
 trackSearchDom.addEventListener('keyup',  async () =>{
     lista.innerHTML = "";
     let searchValue = trackSearchDom.value;
     if(searchValue !== ''){
        searchData =  await apiTrack.getSearchData(searchValue);
-       coincidenciasTextDom.innerText = `N° de Canciones : ${searchData.total}`;
-       setTracks(searchData.data);
-       setImgPlayTracks();
+       coincidenciasTextDom.innerText = `N° de coincidencias encontradas: ${searchData.total}`;
+       searchData = searchData.data;
+        // console.log(searchData);
+        setTracks(searchData);
+        setImgPlayTracks();
     }else{
         coincidenciasTextDom.innerText = "Búsqueda";
-       setTracks(initialTracks);
+        setTracks(initialTracks);
+        setImgPlayTracks();
     }
 })
 
 const setReproductor = (element) =>{
     let idTrack = element.getAttribute('track');
-    showReproductor(idTrack);
+    showReproductor(idTrack,initialTracks);
 }
 
 const setTracks = (tracks) =>{
@@ -79,13 +100,13 @@ btnReproducirDom.addEventListener('click', async () =>{
 })
 
 
-const setTrackReproductor = (track) =>{
-    audioMp3Dom.setAttribute('src',track.preview);
+const setTrackReproductor = () =>{
+    audioMp3Dom.setAttribute('src',trackPlay.song);
     audioMp3Dom.play();
     removeAdd(playDom,'fa-play-circle','fa-pause-circle');
-    imgTrackReproductorDom.setAttribute('src',track.album.cover_medium);
-    detalleCancionDom.innerText = track.title;
-    detalleArtistaAlbumDom.innerHTML = `${track.artist.name} - ${track.album.title}`
+    imgTrackReproductorDom.setAttribute('src',trackPlay.imagen);
+    detalleCancionDom.innerText = trackPlay.title;
+    detalleArtistaAlbumDom.innerHTML = `${trackPlay.artista} - ${trackPlay.albm}`
     reproductorDom.style.opacity = "1"
 }
 
@@ -108,8 +129,12 @@ const showReproductor =  async (idTrack)  =>{
         i == 1 ? element.classList.add('fs-65') : element.classList.add('fs-35') ;
         i++;
     });
-    let track = await apiTrack.getTrack(idTrack);
-    setTrackReproductor(track);
+
+    let trackSearch  = trackSearchDom.value === '' ?  initialTracks.filter( trackArray => trackArray.id == idTrack) : searchData.filter( trackArray => trackArray.id == idTrack);
+    trackPlay = trackSearch[first];
+    // console.log(trackPlay);
+    // let track = await apiTrack.getTrack(idTrack);
+    setTrackReproductor(trackPlay);
 
 }
 

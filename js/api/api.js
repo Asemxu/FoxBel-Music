@@ -10,7 +10,6 @@ class Api{
             let  cantidadTracksShow = 20;
             for(let i = 1; i <= cantidadTracksShow ; i++){
                 let song = await this.#executeQuery(getTrackList(i) ,queryData);
-                
                 song !== undefined ? initialTracks.push(getObject(song)) : "";
             } 
             return initialTracks;
@@ -27,7 +26,6 @@ class Api{
             searchData.data.forEach(track => {
                 searchDataParse.push(getObject(track))
             });
-            // console.log(searchDataParse);
             return { data : searchDataParse , total :searchData.total };
         }
     }

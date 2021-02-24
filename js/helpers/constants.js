@@ -16,8 +16,10 @@ const volume ="#volume";
 const trackSearch = "#trackSearch";
 const querySearch = "querySearch"
 const coincidenciasText = "#coincidenciasText";
-
+const previous = ".previous";
+const next = ".next";
 
 export { listaContainer , first , btnReproducir , queryData , reproductor , detalleSongsButtons
         , detalleCancion , detalleArtistaAlbum , imgPlay , imgTrackReproductor , loader
-        , audioMp3 , play , muted , volume , trackSearch , querySearch , coincidenciasText}
+        , audioMp3 , play , muted , volume , trackSearch , querySearch , coincidenciasText
+        , next , previous }
