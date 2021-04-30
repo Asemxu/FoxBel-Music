@@ -63,12 +63,10 @@ const searchTracks = async () =>{
 
 window.addEventListener('scroll',() =>{
     let scroll = document.documentElement.scrollTop;
-    console.log(scroll);
-    if(scroll > 70){
+    if(scroll > 70)
         headerMainDom.classList.add('scroll-fixed');
-    }else{
+    else
         headerMainDom.classList.remove('scroll-fixed');
-    }
 
 })
 
@@ -84,22 +82,27 @@ window.onscroll = () =>{
 trackSearchDom.addEventListener('keyup',  async () =>{
     lista.innerHTML = "";
     loaderContainerDom.style.display="flex";
-    let searchValue = trackSearchDom.value;
-    if(searchValue !== ''){
-       searchData =  await apiTrack.getSearchData(searchValue);
-    //    console.log(searchData);
-       coincidenciasTextDom.innerText = `N° de coincidencias encontradas: ${searchData.total}`;
-       searchData = searchData.data;
-        // console.log(searchData);
-        setTracks(searchData);
-        loaderContainerDom.style.display="none";
-        setImgPlayTracks();
-    }else{
-        coincidenciasTextDom.innerText = "Búsqueda";
-        setTracks(initialTracks);
-        setImgPlayTracks();
-    }
+    IsEmpty(trackSearchDom.value);
 })
+
+
+const IsEmpty = async  (value) =>{
+    if(value !== ''){
+        searchData =  await apiTrack.getSearchData(value);
+        
+        coincidenciasTextDom.innerText = `N° de coincidencias encontradas: ${searchData.total}`;
+        loaderContainerDom.style.display="none";
+         setTracksDom(searchData.data);
+     }else{
+         coincidenciasTextDom.innerText = "Búsqueda";
+         setTracksDom(initialTracks)
+     }
+}
+
+const setTracksDom = (data) =>{
+    setTracks(data);
+    setImgPlayTracks();
+}
 
 const setReproductor = (element) =>{
     let idTrack = element.getAttribute('track');
@@ -124,7 +127,6 @@ btnReproducirDom.addEventListener('click', async () =>{
 
 
 const setTrackReproductor = () =>{
-    // console.log(trackPlay);
     audioMp3Dom.setAttribute('src',trackPlay.song);
     audioMp3Dom.play();
     removeAdd(playDom,'fa-play-circle','fa-pause-circle');
@@ -132,6 +134,7 @@ const setTrackReproductor = () =>{
     detalleCancionDom.innerText = trackPlay.name;
     detalleArtistaAlbumDom.innerHTML = `${trackPlay.artista} - ${trackPlay.album}`
     reproductorDom.style.opacity = "1"
+    
 }
 
 playDom.addEventListener('click' , () => {
@@ -144,20 +147,14 @@ playDom.addEventListener('click' , () => {
     }
 })
 
-const showReproductor =  async (idTrack,type)  =>{
+const showReproductor =  async (idTrack)  =>{
     reproductorDom.style.opacity ="0.75";
     reproductorDom.classList.add('click');
     let childs = Array.from(detalleSongsButtonsDom[first].children);
-    let i = 0;
-    childs.forEach(element => {
-        i == 1 ? element.classList.add('fs-65') : element.classList.add('fs-35') ;
-        i++;
-    });
-
-    let trackSearch  = trackSearchDom.value === '' ?  initialTracks.filter( trackArray => trackArray.id == idTrack) : searchData.filter( trackArray => trackArray.id == idTrack);
+    for(let i = 0; i <childs.length ; i++)
+        i == 1 ? childs[i].classList.add('fs-65') : childs[i].classList.add('fs-35') ;
+    let trackSearch  = trackSearchDom.value === '' ?  initialTracks.filter( trackArray => trackArray.id == idTrack) : searchData.data.filter( trackArray => trackArray.id == idTrack);
     trackPlay = trackSearch[first];
-    // console.log(trackPlay);
-    // let track = await apiTrack.getTrack(idTrack);
     setTrackReproductor(trackPlay);
 
 }
